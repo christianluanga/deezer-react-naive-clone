@@ -1,13 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { StyleSheet, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MusicScreen from './src/components/Screens/HomeScreen';
+import PodcastScreen from './src/components/Screens/PodcastScreen';
+import SearchScreen from './src/components/Screens/SearchScreen';
+import PremiumScreen from './src/components/Screens/PremiumScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const Tab = createBottomTabNavigator();
+
 
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator screenOptions={({route})=>({
+        tabBarActiveTintColor: 'tomato'
+      })}>
+        <Tab.Screen name="Music" component={MusicScreen} 
+          options={({ route }) => ({
+            tabBarIcon: ({color, size})=>(
+              <MaterialCommunityIcons name="music" color={color} size={size}/>
+            )
+          })
+          }/>
+        <Tab.Screen name="Podcasts" component={PodcastScreen} 
+        options={({ route }) => ({
+          tabBarIcon: ({color, size})=>(
+            <MaterialCommunityIcons name="podcast" color={color} size={size}/>
+          )
+        })
+        }/>
+        <Tab.Screen name="Search" component={SearchScreen} 
+        options={({ route }) => ({
+          tabBarIcon: ({color, size})=>(
+            <MaterialCommunityIcons name="magnify" color={color} size={size}/>
+          ),
+          headerShown: false
+        })
+        }/>
+        <Tab.Screen name="Premium" component={PremiumScreen} 
+        options={({ route }) => ({
+          tabBarIcon: ({color, size})=>(
+            <MaterialCommunityIcons name="bullseye" color={color} size={size} />
+          )
+        })
+        }/>
+      </Tab.Navigator>
+    </NavigationContainer>
+
   );
 }
 
